@@ -14,22 +14,16 @@ def t2p(a):
     part_b = (-1 * a + 90) * (np.absolute((a < 0) * a) > 90) # the south-western quarter
     part_c = (-1 * a + 360 + 90) * (np.absolute((a > 0) * a) > 90) # the south-eastern quarter
     
-    return np.radians(part_a + part_b + part_c)
-
-def t2p_n(a):
-    """  Converts a non-masked TUFLOW velocity direction (va_) raster in degrees to polar coorindates in radians.
-         TUFLOW format - North = 0°,  East = 90°, South = 180°/-180°, West = -90°
-         Polar format  - North = 90°, East = 0°,  South = 270°,       West = 180°
-         Returns an array of radians.
-    """
-
-    part_a = (-1 * (a - 90)) * (np.absolute(a) <= 90) # the northern half
-    part_b = (-1 * a + 90) * (np.absolute((a < 0) * a) > 90) # the south-western quarter
-    part_c = (-1 * a + 360 + 90) * (np.absolute((a > 0) * a) > 90) # the south-eastern quarter
-    
-    return np.radians(part_a + part_b + part_c)                      
+    return np.radians(part_a + part_b + part_c)                   
                                                                         
 def inflows(x):
+    n = min(0,(np.sin(x) * np.array([1,0,0,0])).sum())
+    s = max(0,(np.sin(x) * np.array([0,0,0,1])).sum())
+    e = min(0,(np.cos(x) * np.array([0,0,1,0])).sum())
+    w = max(0,(np.cos(x) * np.array([0,1,0,0])).sum())                                    
+    return n + s + e + w
+    
+def inflows_n(x):
     n = min(0,(np.sin(x) * np.array([1,0,0,0])).sum())
     s = max(0,(np.sin(x) * np.array([0,0,0,1])).sum())
     e = min(0,(np.cos(x) * np.array([0,0,1,0])).sum())
