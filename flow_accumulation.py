@@ -41,9 +41,9 @@ def inflows(x):
     w = max(0,(np.cos(x) * np.array([0,1,0,0])).sum())                                    
     return n + s + e + w
                                                                     
-def inflows_n(x):
+def inflows_n(x): # this function will need to be expanded to multiply unit inflows from neighbours by current accumulation in those neighbouring cells.
     """ Filter function for array with -999 values.
-        Calculates flows towards cell from neighbours. """
+        Calculates flows towards cell from neighbours."""
     (n, s, e, w) = 0, 0, 0, 0
     u = (x * np.array([1,0,0,0])).sum()
     d = (x * np.array([0,0,0,1])).sum()
